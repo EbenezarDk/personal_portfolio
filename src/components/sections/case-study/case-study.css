@@ -1,0 +1,412 @@
+.case {
+  --case-inset: clamp(16px, 5vw, 100px);
+  --case-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  padding: var(--case-inset);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.case .wrap {
+  position: relative;
+  z-index: 2;
+  padding-inline: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.case .kicker {
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 1.2vw, 14px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--foreground);
+  margin-bottom: 0;
+}
+
+.case .title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--accent);
+  font-size: clamp(28px, 8vw, 80px);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 0.05em;
+  overflow: visible;
+  box-sizing: content-box;
+  perspective: 600px;
+}
+
+.case-title .title-line-2 {
+  margin-top: 16px;
+}
+
+.case .lede {
+  margin-top: 0;
+  max-width: 30ch;
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 1.2vw, 18px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.case-cta {
+  margin-top: 0;
+}
+
+.case-cta .btn-wrapper {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 24px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ─── Click widget (project picker) ──────────────────── */
+
+.case-indicators {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  max-width: calc(100% - var(--case-inset) * 2);
+  overflow: visible;
+}
+
+.case-dock {
+  margin: 0;
+  gap: clamp(8px, 1.5vw, 16px);
+  overflow: visible;
+  border: none;
+  background: none;
+  backdrop-filter: none;
+  padding: 0;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-dock-icon {
+  padding: 0;
+  will-change: width, height;
+}
+
+.case-indicator {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 2px solid rgba(233, 223, 206, 0.15);
+  border-radius: clamp(10px, 1.2vw, 16px);
+  background: #1a1a1a;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.35s var(--case-ease);
+}
+
+.case-indicator--active {
+  border-color: rgba(45, 255, 87, 1);
+}
+
+.case-indicator__thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.case-indicator__thumb--gradient {
+  display: block;
+}
+
+.case-indicator:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .case-indicators {
+    top: auto;
+    bottom: var(--case-inset);
+    transform: translateX(-50%);
+    max-width: calc(100% - var(--case-inset) * 2);
+  }
+}
+
+.case .ltr {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+
+.case .ltr.space {
+  width: 0.32em;
+}
+
+.case .btn-wrapper {
+  display: inline-flex;
+  width: fit-content;
+}
+
+.case .btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 1rem, 16px);
+  font-weight: 600;
+  color: var(--foreground);
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.case a.btn {
+  text-decoration: none;
+}
+
+.case .btn-label {
+  line-height: 1;
+  overflow: hidden;
+}
+
+.case .btn-chevron {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .case .wrap {
+    gap: 24px;
+  }
+}
+
+/* ─── Project overlay modal ──────────────────────────── */
+
+.playground-overlay {
+  --overlay-inset: 50px;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: block;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+.playground-overlay__panel {
+  position: absolute;
+  top: var(--overlay-inset);
+  left: var(--overlay-inset);
+  right: var(--overlay-inset);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: calc(100vh - var(--overlay-inset));
+  max-height: none;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  box-shadow:
+    0 -8px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  overflow: hidden;
+}
+
+.playground-overlay__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.playground-overlay__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.playground-overlay__title-line-2 {
+  display: block;
+  margin-top: 16px;
+}
+
+.playground-overlay__close {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.playground-overlay__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.playground-overlay__close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.playground-overlay__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding: 0 24px 24px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.playground-overlay__body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.playground-overlay__body::-webkit-scrollbar-thumb,
+.playground-overlay__body::-webkit-scrollbar-track {
+  display: none;
+  background: transparent;
+}
+
+.playground-overlay__cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(240px, 40vh, 480px);
+  border-radius: 8px;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center;
+  background-color: #2a2a2a;
+}
+
+.playground-overlay__cover-placeholder {
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1.5vw, 18px);
+  color: rgba(233, 223, 206, 0.55);
+  text-align: center;
+  padding: 24px;
+}
+
+.playground-overlay__content {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.playground-overlay__lede {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.playground-overlay__featured {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: rgba(233, 223, 206, 0.45);
+}
+
+.playground-overlay__section-title {
+  margin: 32px 0 16px;
+  font-family: var(--font-sans);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.playground-overlay__text {
+  margin: 0 0 16px;
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.playground-overlay__figure {
+  margin: 24px 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  min-height: clamp(200px, 30vh, 400px);
+}
+
+.playground-overlay__figure img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .playground-overlay {
+    --overlay-inset: clamp(16px, 5vw, 24px);
+  }
+
+  .playground-overlay__panel {
+    top: 40px;
+    height: calc(100vh - 40px);
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .case-indicator {
+    transition: none !important;
+    animation: none !important;
+  }
+}

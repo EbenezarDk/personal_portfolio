@@ -1,0 +1,31 @@
+.letter-slide-label {
+  display: inline-grid;
+  overflow: hidden;
+  line-height: 1;
+  vertical-align: top;
+}
+
+.letter-slide-label .span-mother,
+.letter-slide-label .span-mother2 {
+  grid-area: 1 / 1;
+  display: flex;
+  line-height: 1;
+}
+
+.letter-slide-label .span-mother span,
+.letter-slide-label .span-mother2 span {
+  display: inline-block;
+  line-height: 1;
+}
+
+.letter-slide-label .span-mother2 span {
+  transform: translateY(-100%);
+}
+
+.letter-slide-trigger.is-active:hover .span-mother span {
+  transform: translateY(100%);
+}
+
+.letter-slide-trigger.is-active:hover .span-mother2 span {
+  transform: translateY(0);
+}

@@ -1,0 +1,181 @@
+@import "tailwindcss";
+@import "../components/letter-slide.css";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #e9dfce;
+  --muted: rgba(233, 223, 206, 0.72);
+  --border: rgba(233, 223, 206, 0.12);
+  --accent: #2dff57;
+  --header-height: 100px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Be Vietnam Pro", system-ui, sans-serif;
+  --font-mono: "Be Vietnam Pro", ui-monospace, monospace;
+  --font-display: "Be Vietnam Pro", system-ui, sans-serif;
+  --font-script: "Playball", cursive;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-padding-top: var(--header-height);
+}
+
+html.playground-overlay-open,
+html.playground-overlay-open body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.playground-overlay-open::-webkit-scrollbar,
+html.playground-overlay-open body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  overflow-y: visible;
+  min-height: 100%;
+}
+
+::selection {
+  background: rgba(233, 223, 206, 0.18);
+}
+
+.site-header {
+  isolation: isolate;
+}
+
+.site-header__blur {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--background) 80%, transparent),
+    color-mix(in srgb, var(--background) 10%, transparent)
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.text-glow-accent {
+  color: var(--accent);
+  text-shadow:
+    0 0 18px rgba(45, 255, 87, 0.55),
+    0 0 42px rgba(45, 255, 87, 0.35),
+    0 0 80px rgba(45, 255, 87, 0.22);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+.font-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+}
+
+.page-max {
+  width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (min-width: 1921px) {
+  .page-max {
+    max-width: 1920px;
+    margin-inline: auto;
+  }
+}
+
+#landing {
+  min-height: calc(100dvh - var(--header-height));
+}
+
+.home-lottie canvas {
+  width: 100%;
+  height: 100%;
+  padding-top: 40px;
+  transform: scale(1.1);
+  transform-origin: center center;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-carousel-track {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.logo-carousel-mask:hover .logo-carousel-track {
+  animation-play-state: paused;
+}
+
+.logo-carousel-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 12%,
+    black 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 12%,
+    black 88%,
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-carousel-track {
+    animation: none;
+  }
+}
+
+@media (any-hover: hover) and (any-pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+
+  input,
+  textarea,
+  select {
+    cursor: text !important;
+  }
+}

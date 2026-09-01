@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,500;1,6..96,700&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ---- ACT I : dark editorial ---- */
+    --ink:#0b0b0c;
+    --ink-2:#101012;
+    --paper:#f3f1ea;
+    --paper-dim:#9b9a93;
+    --line:#26262a;
+    --green:#b6ff3d;          /* neon accent from the hover screenshot */
+    --red:#ff2e3c;            /* esperanto red */
+    /* ---- ACT II : light case study ---- */
+    --paper-2:#eceef5;
+    --ink-on-paper:#16161a;
+    --ink-on-paper-dim:#5a5a63;
+
+    --margin: clamp(20px, 13.9vw, 200px);   /* the requested 200px gutter, graceful on small screens */
+    --ease: cubic-bezier(.16,1,.3,1);
+    --ease-tire: cubic-bezier(.7,0,.18,1);
+    --display:"Bodoni Moda", Georgia, serif;
+    --sans:"Archivo", system-ui, sans-serif;
+    --mono:"Space Mono", ui-monospace, monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  ::selection{background:var(--green);color:#000}
+  a{color:inherit;text-decoration:none}
+
+  /* grain / atmosphere */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* custom cursor */
+  .cursor{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--green);
+    pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s,opacity .3s;mix-blend-mode:difference}
+  .cursor.grow{width:46px;height:46px;background:var(--paper)}
+
+  .wrap{padding-inline:var(--margin)}
+
+  /* ============ HEADER ============ */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    padding:28px var(--margin);
+    display:flex;align-items:center;justify-content:space-between;gap:40px;
+    mix-blend-mode:difference;
+  }
+
+  /* ---- LOGO : static by default, animated gif on hover ---- */
+  .logo{display:block;width:46px;height:46px;position:relative;flex:0 0 auto}
+  .logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    transition:opacity .25s ease, transform .5s var(--ease)}
+  .logo .logo-gif{opacity:0}
+  .logo:hover .logo-still{opacity:0}
+  .logo:hover .logo-gif{opacity:1}
+  .logo:hover img{transform:scale(1.06)}
+
+  /* ---- NAV : vertical-scroll marquee (tire-roll) ---- */
+  nav{display:flex;gap:clamp(20px,3.4vw,58px);align-items:center}
+
+  .nav-item{
+    --h:36px;                         /* height of one visible block */
+    display:block;
+    overflow:hidden;                  /* clips to one block at a time */
+    height:var(--h);
+    cursor:pointer;
+  }
+
+  /* inner wrapper holds BOTH faces stacked — total height = 2 × --h
+     sliding translateY(-var(--h)) on hover reveals the second face      */
+  .nav-flip{
+    display:flex;
+    flex-direction:column;
+    transition:transform .52s cubic-bezier(.7,0,.18,1);
+    will-change:transform;
+  }
+  .nav-item:hover .nav-flip{
+    transform:translateY(calc(-1 * var(--h)));   /* scroll up one block */
+  }
+
+  /* each face is exactly --h tall */
+  .face{
+    height:var(--h);
+    flex:0 0 var(--h);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:2px;
+  }
+
+  .face .num{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    line-height:1;
+  }
+  /* the green line that draws in on hover */
+  .face .num .rule{
+    display:inline-block;
+    height:1px;
+    background:currentColor;
+    width:0;
+    transition:width .45s var(--ease) .08s;
+  }
+  .face .label{
+    font-family:var(--sans);
+    font-weight:400;                  /* regular — as requested */
+    font-size:14px;                   /* 14px — as requested */
+    letter-spacing:.01em;
+    line-height:1;
+    white-space:nowrap;
+  }
+
+  /* default face: dim number, white label */
+  .face.front .num{color:var(--paper-dim)}
+  .face.front .label{color:var(--paper)}
+
+  /* hover face: green number + line, same white label */
+  .face.back .num{color:var(--green)}
+  .face.back .label{color:var(--paper)}
+
+  /* line only draws when item is hovered */
+  .nav-item:hover .face.back .num .rule{width:38px}
+
+  /* ============ HERO (ACT I) ============ */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding-block:170px 90px}
+  .hero .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--green);
+    text-transform:uppercase;margin-bottom:34px;overflow:hidden}
+  .hero .eyebrow span{display:inline-block}
+
+  .hero h1{
+    font-family:var(--display);font-weight:900;line-height:.92;letter-spacing:-.02em;
+    font-size:clamp(58px,12.5vw,190px);
+  }
+  .hero h1 .line{display:block;overflow:hidden;padding-bottom:.04em}
+  .hero h1 .italic{font-style:italic;font-weight:500;color:var(--red)}
+
+  /* each letter starts below + rotated, then rises into place */
+  .ltr{display:inline-block;transform-origin:50% 100%;will-change:transform,opacity}
+  .reveal .ltr{transform:translateY(110%) rotateX(-92deg);opacity:0}
+  .reveal.go .ltr{
+    transform:translateY(0) rotateX(0);opacity:1;
+    transition:transform .95s var(--ease),opacity .7s ease;
+  }
+  .ltr.space{width:.32em}
+
+  .hero .sub{display:flex;justify-content:space-between;align-items:flex-end;margin-top:60px;gap:40px;flex-wrap:wrap}
+  .hero .sub p{max-width:30ch;color:var(--paper-dim);font-size:16px;line-height:1.6}
+  .hero .sub p b{color:var(--paper);font-weight:600}
+  .scroll-cue{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--paper-dim);
+    display:flex;align-items:center;gap:12px}
+  .scroll-cue .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+
+  /* ============ CASE STUDY (ACT II) ============ */
+  .case{
+    background:var(--paper-2);color:var(--ink-on-paper);
+    min-height:100vh;position:relative;padding-block:140px;overflow:hidden;
+  }
+  .case .wrap{position:relative;z-index:2}
+  .case .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--red);margin-bottom:26px;display:flex;align-items:center;gap:14px}
+  .case .kicker .rule{width:46px;height:1px;background:var(--red)}
+
+  .case h2{font-family:var(--display);font-weight:700;color:var(--red);
+    font-size:clamp(60px,12vw,168px);line-height:.9;letter-spacing:-.015em;max-width:13ch}
+  .case h2 .line{display:block;overflow:hidden;padding-bottom:.05em}
+
+  .case .lede{margin-top:34px;max-width:34ch;font-size:clamp(17px,1.4vw,21px);line-height:1.55;color:var(--ink-on-paper-dim)}
+  .open-study{margin-top:46px;display:inline-flex;align-items:center;gap:14px;
+    font-family:var(--sans);font-weight:700;letter-spacing:.05em;font-size:14px;text-transform:uppercase}
+  .open-study .arrow{display:inline-block;transition:transform .4s var(--ease)}
+  .open-study:hover .arrow{transform:translateX(10px)}
+
+  /* the scattered, skewed image cards (robin-noguier / esperanto layout) */
+  .cards{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .card{position:absolute;border-radius:3px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,20,40,.35);
+    transition:transform .6s var(--ease)}
+  .card .skin{position:absolute;inset:0;background-size:cover;background-position:center}
+  .card::after{content:"";position:absolute;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;opacity:.25}
+
+  .card.c1{width:23vw;height:26vh;top:-4vh;right:7vw;transform:rotate(-3deg) skewY(-3deg);
+    background:linear-gradient(135deg,#c9c9cf,#7d7d86)}
+  .card.c2{width:33vw;height:48vh;top:24vh;right:3vw;transform:rotate(2.5deg) skewY(2deg);
+    background:linear-gradient(150deg,#ff2e3c,#7a0f18 60%,#2a2a35)}
+  .card.c3{width:30vw;height:30vh;bottom:-6vh;right:6vw;transform:rotate(-2deg) skewY(-2.5deg);
+    background:linear-gradient(135deg,#d3d3da,#8a8a93)}
+
+  /* little browser-mockup card, bottom-left */
+  .mock{position:absolute;left:var(--margin);bottom:90px;width:240px;height:150px;z-index:3;
+    border:2px solid var(--red);border-radius:6px;background:#fff;overflow:hidden;
+    box-shadow:0 30px 60px -25px rgba(20,20,40,.4);transition:transform .6s var(--ease)}
+  .mock .bar{height:18px;background:#111;display:flex;align-items:center;padding:0 8px;gap:5px}
+  .mock .bar i{width:5px;height:5px;border-radius:50%;background:#555;display:inline-block}
+  .mock .body{padding:14px 16px}
+  .mock .body .nm{font-family:var(--display);font-weight:900;font-style:italic;color:var(--red);font-size:26px;line-height:.9}
+  .mock .body .nm small{display:block;font-style:normal;color:#111;font-size:9px;letter-spacing:.2em;margin-bottom:4px;font-family:var(--mono)}
+  .mock .body .ph{margin-top:10px;height:46px;border-radius:3px;background:linear-gradient(135deg,#6b6b72,#3a3a40)}
+
+  /* dashed scroll indicator on the right edge (like the reference) */
+  .ticks{position:absolute;right:38px;top:50%;transform:translateY(-50%);z-index:4;
+    display:flex;flex-direction:column;gap:13px}
+  .ticks i{width:1px;height:13px;background:#b7b7c0;display:block}
+  .ticks i.on{background:var(--red);height:22px}
+
+  /* reveal-on-scroll base for ACT II text */
+  .reveal2{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .reveal2.go{opacity:1;transform:none}
+
+  footer{background:var(--ink);color:var(--paper);padding:120px var(--margin) 60px}
+  footer .big{font-family:var(--display);font-weight:500;font-style:italic;font-size:clamp(34px,6vw,84px);line-height:1;letter-spacing:-.01em}
+  footer .big a{color:var(--green)}
+  footer .row{display:flex;justify-content:space-between;margin-top:80px;font-family:var(--mono);
+    font-size:12px;letter-spacing:.12em;color:var(--paper-dim);text-transform:uppercase;flex-wrap:wrap;gap:20px}
+
+  @media (max-width:900px){
+    header{flex-direction:column;gap:26px}
+    nav{flex-wrap:wrap;gap:26px 34px}
+    .nav-flip{--h:54px}
+    body{cursor:auto}.cursor{display:none}
+    .mock{display:none}.ticks{display:none}
+    .card.c1{width:46vw;height:20vh}.card.c2{width:60vw;height:34vh}.card.c3{width:54vw;height:24vh}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <a href="#" class="logo" data-cursor aria-label="Home">
+    <img class="logo-still" src="data:image/jpeg;base64,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" alt="logo">
+    <img class="logo-gif"   src="data:image/jpeg;base64,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" alt="" aria-hidden="true">
+  </a>
+
+  <nav>
+    <!-- each item is a 3D "wheel" that rolls up on hover -->
+    <a class="nav-item" href="#" data-cursor>
+      <span class="nav-flip">
+        <span class="face front"><span class="num">01</span><span class="label">Who I&rsquo;m</span></span>
+        <span class="face back"><span class="num">01<span class="rule"></span></span><span class="label">Who I&rsquo;m</span></span>
+      </span>
+    </a>
+    <a class="nav-item" href="#" data-cursor>
+      <span class="nav-flip">
+        <span class="face front"><span class="num">02</span><span class="label">My playground</span></span>
+        <span class="face back"><span class="num">02<span class="rule"></span></span><span class="label">My playground</span></span>
+      </span>
+    </a>
+    <a class="nav-item" href="#" data-cursor>
+      <span class="nav-flip">
+        <span class="face front"><span class="num">03</span><span class="label">Know about me</span></span>
+        <span class="face back"><span class="num">03<span class="rule"></span></span><span class="label">Know about me</span></span>
+      </span>
+    </a>
+    <a class="nav-item" href="#" data-cursor>
+      <span class="nav-flip">
+        <span class="face front"><span class="num">04</span><span class="label">If you want anything</span></span>
+        <span class="face back"><span class="num">04<span class="rule"></span></span><span class="label">If you want anything</span></span>
+      </span>
+    </a>
+  </nav>
+</header>
+
+<!-- ============ ACT I — HERO ============ -->
+<section class="hero wrap">
+  <div class="eyebrow"><span data-load>Independent creative developer — folio 2026</span></div>
+
+  <h1>
+    <span class="line"><span class="reveal" data-letters>Crafting</span></span>
+    <span class="line"><span class="reveal italic" data-letters>digital</span></span>
+    <span class="line"><span class="reveal" data-letters>experiences</span></span>
+  </h1>
+
+  <div class="sub">
+    <p><b>A designer &amp; engineer</b> shaping motion, interface and story into work that feels alive.</p>
+    <div class="scroll-cue"><span class="dot"></span> SCROLL TO EXPLORE</div>
+  </div>
+</section>
+
+<!-- ============ ACT II — CASE STUDY / 2ND FOLD ============ -->
+<section class="case" data-cursor-light>
+  <!-- scattered angled cards -->
+  <div class="cards">
+    <div class="card c1"></div>
+    <div class="card c2"></div>
+    <div class="card c3"></div>
+  </div>
+
+  <!-- mini browser mockup -->
+  <div class="mock">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="body">
+      <div class="nm"><small>FEATURED</small>Marco<br>Palmieri</div>
+      <div class="ph"></div>
+    </div>
+  </div>
+
+  <!-- dashed scroll ticks -->
+  <div class="ticks">
+    <i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+
+  <div class="wrap">
+    <div class="kicker reveal2"><span class="rule"></span> SELECTED WORK / 01</div>
+    <h2>
+      <span class="line"><span class="reveal" data-letters>Esperanto</span></span>
+    </h2>
+    <p class="lede reveal2">A year-long journey around the world to shine a light on creatives from sixteen different countries.</p>
+    <a class="open-study reveal2" href="#" data-cursor>Open case study <span class="arrow">&rarr;</span></a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="wrap">
+  <div class="big">Let&rsquo;s build something <a href="#" data-cursor>worth&nbsp;remembering &rarr;</a></div>
+  <div class="row">
+    <span>&copy; 2026 — Studio</span>
+    <span>Based everywhere · Available for work</span>
+    <span>Instagram · Dribbble · LinkedIn</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- 1. per-letter rotation reveal (50ms stagger) ---------- */
+function splitLetters(el){
+  const text = el.textContent;
+  el.textContent = "";
+  let i = 0;
+  for(const ch of text){
+    const s = document.createElement("span");
+    s.className = "ltr" + (ch === " " ? " space" : "");
+    s.textContent = ch === " " ? "\u00A0" : ch;
+    s.style.transitionDelay = (i*0.05) + "s";   // <-- 50ms per letter
+    el.appendChild(s);
+    i++;
+  }
+}
+document.querySelectorAll("[data-letters]").forEach(splitLetters);
+
+/* play hero letters on load */
+window.addEventListener("load", ()=>{
+  document.querySelectorAll(".hero [data-letters]").forEach(el=>el.classList.add("go"));
+  const eb = document.querySelector(".eyebrow span");
+  if(eb){ eb.style.transition="transform .9s var(--ease) .2s,opacity .9s ease .2s";
+          eb.style.transform="translateY(0)"; eb.style.opacity="1"; }
+});
+// set eyebrow initial hidden state
+(()=>{const eb=document.querySelector(".eyebrow span");
+  if(eb){eb.style.transform="translateY(110%)";eb.style.opacity="0";eb.style.display="inline-block";}})();
+
+/* ---------- 2. reveal ACT II on scroll ---------- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      if(e.target.matches("[data-letters]")) e.target.classList.add("go");
+      else e.target.classList.add("go");
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.25});
+document.querySelectorAll(".case [data-letters], .reveal2").forEach(el=>io.observe(el));
+
+/* stagger the reveal2 blocks slightly */
+document.querySelectorAll(".case .reveal2").forEach((el,i)=>el.style.transitionDelay=(i*0.12)+"s");
+
+/* ---------- 3. custom cursor + parallax cards ---------- */
+const cursor = document.getElementById("cursor");
+let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
+addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;
+  // parallax on the case cards
+  const dx=(e.clientX/innerWidth-.5), dy=(e.clientY/innerHeight-.5);
+  document.querySelectorAll(".card").forEach((c,i)=>{
+    const f=(i+1)*8;
+    c.style.setProperty("--px", (dx*f)+"px");
+  });
+  document.querySelectorAll(".card").forEach((c,i)=>{
+    const f=(i+1)*10;
+    c.style.transform = c.getAttribute("data-base") + ` translate(${dx*f}px, ${dy*f}px)`;
+  });
+});
+(function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;
+  cursor.style.transform=`translate(${cx-4.5}px,${cy-4.5}px)`;requestAnimationFrame(loop);})();
+
+// store base transforms for parallax
+document.querySelectorAll(".card").forEach(c=>{
+  c.setAttribute("data-base", getComputedStyle(c).transform === "none" ? "" : getComputedStyle(c).transform);
+});
+
+document.querySelectorAll("[data-cursor]").forEach(el=>{
+  el.addEventListener("mouseenter",()=>cursor.classList.add("grow"));
+  el.addEventListener("mouseleave",()=>cursor.classList.remove("grow"));
+});
+
+/* restart the logo gif each time it is hovered so the animation always replays */
+const logo = document.querySelector(".logo");
+const gifEl = document.querySelector(".logo-gif");
+const gifSrc = gifEl.src;
+logo.addEventListener("mouseenter",()=>{ gifEl.src = gifSrc.split("#")[0] + "#" + Date.now(); });
+</script>
+</body>
+</html>
