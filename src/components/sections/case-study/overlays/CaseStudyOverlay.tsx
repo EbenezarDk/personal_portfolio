@@ -15,7 +15,6 @@ import {
   CaseStudyIASection,
   CaseStudyUserFlowSection,
 } from "../shared/CaseStudyDiagramSections";
-import { CaseStudyShowcaseSection } from "../shared/CaseStudyShowcase";
 import { CaseStudyOutcomesSection } from "../shared/CaseStudyOutcomes";
 import { CaseStudyFooterSection } from "../shared/CaseStudyFooter";
 import { useOverlayScrollProgress } from "../shared/useOverlayScrollTrigger";
@@ -76,14 +75,6 @@ export function CaseStudyOverlay({
         <CaseStudyResearchSection research={content.research} />
         <CaseStudyIASection section={content.informationArchitecture} />
         <CaseStudyUserFlowSection section={content.userFlow} />
-
-        {content.showcases.map((showcase) => (
-          <CaseStudyShowcaseSection
-            key={showcase.id}
-            showcase={showcase}
-            scrollRef={scrollRef}
-          />
-        ))}
 
         <CaseStudyOutcomesSection outcomes={content.outcomes} />
         <CaseStudyFooterSection

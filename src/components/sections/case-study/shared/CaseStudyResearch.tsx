@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { CaseStudyResearch } from "@/lib/case-studies/types";
 import {
   CaseStudyKicker,
-  CaseStudyLinkPill,
   CaseStudySectionReveal,
 } from "./CaseStudySectionReveal";
 
@@ -36,10 +35,6 @@ export function CaseStudyResearchSection({
           </motion.li>
         ))}
       </ul>
-      <CaseStudyLinkPill
-        href={research.link.href}
-        label={research.link.label}
-      />
     </CaseStudySectionReveal>
   );
 }

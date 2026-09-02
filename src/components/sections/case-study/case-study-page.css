@@ -40,20 +40,20 @@
 
 .cs-kicker {
   margin: 0 0 12px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--foreground);
 }
 
 .cs-heading {
   margin: 0 0 16px;
   font-family: var(--font-display);
-  font-size: clamp(22px, 2.5vw, 32px);
+  font-size: 22px;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--accent);
+  color: var(--foreground);
 }
 
 .cs-subheading {
@@ -65,7 +65,7 @@
 
 .cs-body {
   margin: 0 0 16px;
-  max-width: 62ch;
+  width: 100%;
   font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1.7;
   color: var(--muted);
@@ -220,54 +220,9 @@
 
 .cs-problem__intro {
   margin: 0 0 20px;
-  max-width: 62ch;
+  width: 100%;
   font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1.7;
-  color: var(--muted);
-}
-
-.cs-problem__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-
-.cs-problem__chip {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 44px;
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.02);
-  text-align: left;
-  cursor: pointer;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
-}
-
-.cs-problem__chip:hover,
-.cs-problem__chip--active {
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 12px 32px rgba(45, 255, 87, 0.1);
-}
-
-.cs-problem__chip-title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--foreground);
-}
-
-.cs-problem__chip-detail {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
   color: var(--muted);
 }
 
@@ -649,7 +604,7 @@
   font-size: clamp(22px, 3vw, 32px);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--accent);
+  color: var(--foreground);
 }
 
 .cs-footer__profile {

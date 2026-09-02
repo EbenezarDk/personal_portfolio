@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { CaseStudyDesignProgress } from "@/lib/case-studies/types";
 import {
   CaseStudyKicker,
-  CaseStudyLinkPill,
   CaseStudySectionReveal,
 } from "./CaseStudySectionReveal";
 
@@ -85,25 +84,6 @@ export function CaseStudyTimeline({
         ))}
       </div>
 
-      <motion.div
-        className="cs-timeline__image-wrap"
-        initial={reducedMotion ? false : { opacity: 0, scale: 0.98 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <img
-          src={designProgress.imageSrc}
-          alt={designProgress.imageAlt}
-          className="cs-timeline__image"
-          loading="lazy"
-        />
-      </motion.div>
-
-      <CaseStudyLinkPill
-        href={designProgress.link.href}
-        label={designProgress.link.label}
-      />
     </CaseStudySectionReveal>
   );
 }

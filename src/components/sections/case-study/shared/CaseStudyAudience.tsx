@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import type { CaseStudyAudience } from "@/lib/case-studies/types";
 import {
   CaseStudyKicker,
-  CaseStudyLinkPill,
   CaseStudySectionReveal,
 } from "./CaseStudySectionReveal";
 
@@ -108,11 +107,6 @@ export function CaseStudyAudienceSection({
           ))}
         </div>
       </div>
-
-      <CaseStudyLinkPill
-        href={audience.link.href}
-        label={audience.link.label}
-      />
     </CaseStudySectionReveal>
   );
 }

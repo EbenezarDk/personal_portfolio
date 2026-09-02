@@ -10,7 +10,7 @@ export const agilusCaseStudy: CaseStudyContent = {
     layout: "banner",
   },
   projectBrief: {
-    kicker: "PROJECT BRIEF",
+    kicker: "Project Brief",
     heading: "About Agilus Diagnostic",
     paragraphs: [
       "Agilus Diagnostics, a prominent diagnostic laboratory chain in India and a part of the Fortis Group, operates across 25 states with 400+ laboratories. In addition to this extensive network, Agilus Diagnostics provides a wide range of services, including home collection services, specialized diagnostic tests, and wellness packages.",
@@ -20,45 +20,7 @@ export const agilusCaseStudy: CaseStudyContent = {
   problemBrief: {
     heading: "Problem Brief",
     intro:
-      "Users face a fragmented diagnostic journey across booking, collection, consultation, and report management.",
-    painPoints: [
-      {
-        id: "multi-booking",
-        title: "Multi-person scheduling",
-        detail:
-          "Selecting and scheduling tests for multiple people at once is complex and time-consuming.",
-      },
-      {
-        id: "real-time",
-        title: "No real-time updates",
-        detail:
-          "Lack of live updates for home sample collection and report generation leads to prolonged waiting.",
-      },
-      {
-        id: "lab-navigation",
-        title: "Confusing lab navigation",
-        detail:
-          "Navigation during in-lab visits is confusing with limited visibility of doctor availability.",
-      },
-      {
-        id: "rescheduling",
-        title: "Difficult rescheduling",
-        detail:
-          "The rescheduling process is complicated and online consultations are challenging to manage.",
-      },
-      {
-        id: "reports",
-        title: "Report management",
-        detail:
-          "Managing health reports and personal health data across devices is inconvenient.",
-      },
-      {
-        id: "family",
-        title: "Family test coordination",
-        detail:
-          "Families struggle to coordinate tests, track orders, and share results in one place.",
-      },
-    ],
+      "Users face difficulties in selecting and scheduling tests for multiple people at once, with a complex and time-consuming process. There is a lack of real-time updates for home sample collection and report generation, leading to prolonged waiting times at the lab. Navigation during lab test is confusing, and there's limited visibility of doctor availability. The rescheduling process is complicated, online consultations are challenging, and managing health reports and data is inconvenient.",
   },
   designProgress: {
     kicker: "Design Progress",
@@ -105,12 +67,6 @@ export const agilusCaseStudy: CaseStudyContent = {
         milestones: ["Feedback", "Dev Handover", "Files Handover"],
       },
     ],
-    imageSrc: "/images/case-studies/agilus/design-progress.png",
-    imageAlt: "Agilus design progress timeline with phased milestones",
-    link: {
-      label: "See Design Process File",
-      href: "#",
-    },
   },
   audience: {
     kicker: "Audience Analysis",
@@ -134,10 +90,6 @@ export const agilusCaseStudy: CaseStudyContent = {
         size: "sm",
       },
     ],
-    link: {
-      label: "See Mood Board",
-      href: "#",
-    },
   },
   goals: {
     kicker: "Design Direction",
@@ -167,71 +119,19 @@ export const agilusCaseStudy: CaseStudyContent = {
       "Loyalty Points and Premium Plan Subscriptions",
       "User Engagement and Gamification",
     ],
-    link: {
-      label: "See Agilus UX Workshop",
-      href: "#",
-    },
   },
   informationArchitecture: {
     kicker: "Information Architecture",
     heading: "Agilus Diagnosis",
     paragraph:
       "You can view the information architecture here. I decided to go ahead with this features. This Information Architecture helps everyone to understand the Agilus Diagnostics Application.",
-    imageSrc: "/images/case-studies/agilus/ia-diagram.png",
-    imageAlt: "Agilus Diagnostics information architecture diagram",
-    link: {
-      label: "See Competitive analysis",
-      href: "#",
-    },
   },
   userFlow: {
     kicker: "User Flow",
     heading: "User flow",
     paragraph:
       "You can see the user flow here. I decided to go ahead with designing the home visit & lab visit and doctor consulting flow.",
-    imageSrc: "/images/case-studies/agilus/user-flow.png",
-    imageAlt: "Agilus user flow diagrams for home visit, lab visit, and doctor consulting",
-    link: {
-      label: "See Agilus Discovery",
-      href: "#",
-    },
   },
-  showcases: [
-    {
-      id: "wireframes",
-      heading: "Wireframes",
-      paragraph:
-        "You can view the wireframes here. I decided to go ahead with this features. This helps everyone to understand the Agilus Diagnostics Application flows.",
-      src: "/images/case-studies/agilus/wireframes.png",
-      alt: "Agilus wireframes and design process screens",
-      link: { label: "See Agilus UX Wireframe", href: "#" },
-    },
-    {
-      id: "design-system-1",
-      heading: "Design System and Visual Style Guide",
-      paragraph:
-        "The visual design language for our product. As design is an iterative process, this will serve as a final visual guide. It aligns our visual ideas with stakeholders, ensuring everyone is on the same page.",
-      src: "/images/case-studies/agilus/design-system-1.png",
-      alt: "Agilus design system and visual style guide",
-      link: { label: "See Agilus Design System", href: "#" },
-    },
-    {
-      id: "ui-showcase",
-      heading: "Design System and Visual Style Guide",
-      paragraph: "High fidelity UI designs across key product journeys.",
-      src: "/images/case-studies/agilus/ui-showcase.png",
-      alt: "Agilus high fidelity UI designs",
-      tall: true,
-      link: { label: "See Agilus UI", href: "#" },
-    },
-    {
-      id: "design-system-2",
-      heading: "Final Showcase",
-      paragraph: "Polished deliverables across booking, tracking, and health management.",
-      src: "/images/case-studies/agilus/design-system-2.png",
-      alt: "Agilus final UI showcase screens",
-    },
-  ],
   outcomes: {
     kicker: "Conclusion",
     achievedHeading: "What was achieved",

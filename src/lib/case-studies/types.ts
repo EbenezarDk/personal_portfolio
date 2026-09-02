@@ -21,16 +21,9 @@ export type CaseStudyTextBlock = {
   paragraphs: string[];
 };
 
-export type CaseStudyPainPoint = {
-  id: string;
-  title: string;
-  detail: string;
-};
-
 export type CaseStudyProblemBrief = {
   heading: string;
   intro?: string;
-  painPoints: CaseStudyPainPoint[];
 };
 
 export type CaseStudyTimelinePhase = {
@@ -43,9 +36,6 @@ export type CaseStudyDesignProgress = {
   heading: string;
   months: string[];
   phases: CaseStudyTimelinePhase[];
-  imageSrc: string;
-  imageAlt: string;
-  link: CaseStudyLink;
 };
 
 export type CaseStudyAudienceTier = {
@@ -69,7 +59,6 @@ export type CaseStudyAudience = {
   ageRange: string;
   tiers: CaseStudyAudienceTier[];
   personas: CaseStudyPersonaBubble[];
-  link: CaseStudyLink;
 };
 
 export type CaseStudyGoalItem = {
@@ -89,27 +78,12 @@ export type CaseStudyResearch = {
   paragraph: string;
   opportunitiesKicker: string;
   opportunities: string[];
-  link: CaseStudyLink;
 };
 
 export type CaseStudyDiagramSection = {
   kicker: string;
   heading: string;
   paragraph: string;
-  imageSrc?: string;
-  imageAlt?: string;
-  link?: CaseStudyLink;
-};
-
-export type CaseStudyShowcase = {
-  id: string;
-  kicker?: string;
-  heading: string;
-  paragraph?: string;
-  src: string;
-  alt: string;
-  tall?: boolean;
-  link?: CaseStudyLink;
 };
 
 export type CaseStudyOutcomes = {
@@ -140,7 +114,6 @@ export type CaseStudyContent = {
   research: CaseStudyResearch;
   informationArchitecture: CaseStudyDiagramSection;
   userFlow: CaseStudyDiagramSection;
-  showcases: CaseStudyShowcase[];
   outcomes: CaseStudyOutcomes;
   footer: CaseStudyFooter;
 };
