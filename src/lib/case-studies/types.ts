@@ -3,6 +3,12 @@ export type CaseStudyLink = {
   href: string;
 };
 
+export type CaseStudyHeroMedia = {
+  type: "image" | "video";
+  src: string;
+  alt: string;
+};
+
 export type CaseStudyHero = {
   logoSrc: string;
   logoAlt: string;
@@ -11,8 +17,10 @@ export type CaseStudyHero = {
   illustrationAlt: string;
   ctaLabel?: string;
   ctaHref?: string;
-  /** Full-viewport centered banner (logo, tagline, illustration). */
-  layout?: "default" | "banner";
+  /** Optional override; dummy Pexels media is used until final assets are supplied. */
+  media?: CaseStudyHeroMedia;
+  /** Full-viewport centered banner, or split media + copy. */
+  layout?: "default" | "banner" | "split";
 };
 
 export type CaseStudyTextBlock = {

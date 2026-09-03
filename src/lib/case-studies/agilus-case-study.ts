@@ -7,7 +7,7 @@ export const agilusCaseStudy: CaseStudyContent = {
     tagline: "Largest clinical examination company of India",
     illustrationSrc: "/images/case-studies/agilus/banner.svg",
     illustrationAlt: "Agilus home collection and diagnostics illustration",
-    layout: "banner",
+    layout: "split",
   },
   projectBrief: {
     kicker: "Project Brief",

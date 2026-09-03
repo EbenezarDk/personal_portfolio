@@ -1,12 +1,39 @@
 .playground-overlay__body--flush {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.playground-overlay__body--flush .cs-page {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  gap: 0;
 }
 
 .playground-overlay__body--flush .cs-hero {
-  align-items: flex-start;
-  justify-content: center;
-  min-height: auto;
-  padding: 0 24px 60px;
+  align-items: stretch;
+  justify-content: stretch;
+  min-height: 0;
+  padding: 0;
+}
+
+.playground-overlay__body--flush .cs-hero--split {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  text-align: left;
+}
+
+.playground-overlay__body--flush .overlay-split {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
 }
 
 .cs-page {
@@ -88,10 +115,18 @@
   justify-content: center;
 }
 
-.cs-hero--banner {
+.cs-hero--banner,
+.cs-hero--split {
   min-height: auto;
   padding: 0 clamp(20px, 4vw, 40px) clamp(40px, 6vh, 56px);
   box-sizing: border-box;
+}
+
+.cs-hero--split {
+  padding: 0;
+  text-align: left;
+  display: flex;
+  width: 100%;
 }
 
 .cs-hero__inner {

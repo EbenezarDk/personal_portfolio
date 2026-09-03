@@ -1,8 +1,49 @@
-export const overlayDummyHeroImage =
-  "https://cdn.pixabay.com/photo/2016/11/29/09/38/adventure-1868711_1280.jpg";
+export type OverlayDummyMedia = {
+  type: "image" | "video";
+  src: string;
+  alt: string;
+};
 
 export const overlayDummyInlineImage =
-  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg";
+  "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1600";
+
+const pexelsMedia: Record<string, OverlayDummyMedia> = {
+  agilus: {
+    type: "video",
+    src: "https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4",
+    alt: "Placeholder laboratory video",
+  },
+  "royal-sundaram": {
+    type: "image",
+    src: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    alt: "Placeholder office collaboration photo",
+  },
+  "crypto-io-design-system": {
+    type: "video",
+    src: "https://videos.pexels.com/video-files/3209298/3209298-uhd_2560_1440_25fps.mp4",
+    alt: "Placeholder technology video",
+  },
+  banglalink: {
+    type: "image",
+    src: "https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    alt: "Placeholder laboratory photo",
+  },
+  flytbase: {
+    type: "video",
+    src: "https://videos.pexels.com/video-files/7578552/7578552-hd_1920_1080_30fps.mp4",
+    alt: "Placeholder aerial video",
+  },
+};
+
+const fallbackMedia: OverlayDummyMedia = {
+  type: "image",
+  src: "https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  alt: "Placeholder project media",
+};
+
+export function getOverlayDummyMedia(projectId: string): OverlayDummyMedia {
+  return pexelsMedia[projectId] ?? fallbackMedia;
+}
 
 export const overlayDummyOverviewParagraphs = [
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
